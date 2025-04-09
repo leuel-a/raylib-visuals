@@ -20,7 +20,6 @@ TreeNode* create_binary_tree_node(int value, Point position) {
 	new->value = value;
     new->position = position;
 
-    /** this is just to be sure it will always be null no need to worry */
 	new->left = NULL;
 	new->right = NULL;
 
@@ -76,7 +75,7 @@ void draw_binary_tree(BinaryTree* tree, int node_radius) {
 void draw_binary_tree_helper(TreeNode* node, int node_radius) {
     if (node == NULL) return;
 
-    DrawCircle(node->position.x, node->position.y, node_radius, BLUE);                              // Draw a color-filled circle
+    DrawCircle(node->position.x, node->position.y, node_radius, BLUE);
 
     draw_binary_tree_helper(node->left, node_radius);
     draw_binary_tree_helper(node->right, node_radius);
