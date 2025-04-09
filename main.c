@@ -1,23 +1,34 @@
 #include "raylib.h"
+#include "main.h"
+#include "binary_tree.h"
+
 
 int main(void)
 {
     const int SCREEN_WIDTH = 800;
-    const int SCREEN_HEIGHT = 800;
+    const int SCREEN_HEIGHT = 600;
+    const int NODE_RADIUS = 40;
 
-	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Binary Tree Visualization");
+    Point root_position = { .x = SCREEN_WIDTH / 2, .y = 200 };
+    BinaryTree* tree = create_binary_tree(root_position);
 
-	while (!WindowShouldClose())
-	{
-		BeginDrawing();
-		ClearBackground(BLACK);
+    insert(tree, 10);
+    insert(tree, 12);
+    insert(tree, 0);
+    insert(tree, -1);
 
-        DrawCircle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 60, BLUE);
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "BINARY TREE VISUALIZATION");
 
-		EndDrawing();
-	}
+    while (!WindowShouldClose())
+    {
+        BeginDrawing();
+            ClearBackground(BLACK);
+            draw_binary_tree(tree, NODE_RADIUS);
+            DrawCircle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, NODE_RADIUS, BLUE);
+        EndDrawing();
+    }
 
-	CloseWindow();
+    CloseWindow();
 
-	return 0;
+    return 0;
 }
