@@ -9,13 +9,17 @@ int main(void)
     const int SCREEN_HEIGHT = 600;
     const int NODE_RADIUS = 40;
 
-    Point root_position = { .x = SCREEN_WIDTH / 2, .y = 200 };
+    Point root_position = { .x = SCREEN_WIDTH / 2, .y = 100 };
     BinaryTree* tree = create_binary_tree(root_position);
 
     insert(tree, 10);
     insert(tree, 12);
+    insert(tree, 20);
+    insert(tree, 15);
     insert(tree, 0);
     insert(tree, -1);
+    insert(tree, -3);
+    insert(tree, 2);
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "BINARY TREE VISUALIZATION");
 
@@ -24,7 +28,6 @@ int main(void)
         BeginDrawing();
             ClearBackground(BLACK);
             draw_binary_tree(tree, NODE_RADIUS);
-            DrawCircle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, NODE_RADIUS, BLUE);
         EndDrawing();
     }
 

@@ -28,6 +28,6 @@ void insert_helper(TreeNode* tree, int value);
 
 /** visualization functons */
 void draw_binary_tree(BinaryTree* tree, int node_radius);
-void draw_binary_tree_helper(TreeNode* node, int node_radius);
+void draw_binary_tree_helper(TreeNode* node, int node_radius, Point *parent_position);
 
 #endif /*BINARY_TREE_H*/

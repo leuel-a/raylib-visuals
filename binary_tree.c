@@ -52,14 +52,14 @@ void insert_helper(TreeNode* node, int value) {
 		if (node->left != NULL) {
 			insert_helper(node->left, value);
         } else {
-            new_position = (Point){ .x = curr_node_position.x - 150, .y = curr_node_position.y + 100 };
+            new_position = (Point){ .x = curr_node_position.x - 150, .y = curr_node_position.y + 120 };
 			node->left = create_binary_tree_node(value, new_position);
         }
 	} else {
 		if (node->right != NULL) {
 			insert_helper(node->right, value);
         } else {
-            new_position = (Point){ .x = curr_node_position.x + 150, .y = curr_node_position.y + 100 };
+            new_position = (Point){ .x = curr_node_position.x + 150, .y = curr_node_position.y + 120 };
 			node->right = create_binary_tree_node(value, new_position);
         }
 	}
@@ -69,16 +69,32 @@ void insert_helper(TreeNode* node, int value) {
 void draw_binary_tree(BinaryTree* tree, int node_radius) {
 	if (tree == NULL)
 		return;
-    draw_binary_tree_helper(tree->root, node_radius);
+    draw_binary_tree_helper(tree->root, node_radius, NULL);
 }
 
-void draw_binary_tree_helper(TreeNode* node, int node_radius) {
+void draw_binary_tree_helper(TreeNode* node, int node_radius, Point *parent_position) {
+    Vector2 textSize;
+    const char* text = NULL;
+    Font font = GetFontDefault();
+    int fontSize = 30, textY, textX;
+
     if (node == NULL) return;
 
     DrawCircle(node->position.x, node->position.y, node_radius, BLUE);
 
-    draw_binary_tree_helper(node->left, node_radius);
-    draw_binary_tree_helper(node->right, node_radius);
+    text = TextFormat("%d", node->value);
+    textSize = MeasureTextEx(font, text, fontSize, 1);
+
+    textX = node->position.x - textSize.x / 2;
+    textY = node->position.y - textSize.y / 2;
+
+    DrawTextEx(font, text, (Vector2){textX, textY}, fontSize, 1, WHITE);
+    if (parent_position != NULL) {
+        DrawLine(parent_position->x, parent_position->y, node->position.x, node->position.y, WHITE);
+    }
+
+    draw_binary_tree_helper(node->left, node_radius, &node->position);
+    draw_binary_tree_helper(node->right, node_radius, &node->position);
 }
 
 /** search functions for a binary tree */
@@ -93,9 +109,8 @@ void dfs_helper(TreeNode* node) {
 	if (node == NULL)
 		return;
 
-
 	dfs_helper(node->left);
-	printf("%d position { .x = %d, .y = %d}", node->value, node->position.x, node->position.y);
+	printf("%d (%d, %d)", node->value, node->position.x, node->position.y);
 	dfs_helper(node->right);
 }
 
