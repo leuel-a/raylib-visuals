@@ -43,6 +43,8 @@ void insert(BinaryTree* tree, int value) {
 }
 
 void insert_helper(TreeNode* node, int value) {
+    const int X_CHANGE = 150;
+    const int Y_CHANGE = 80;
     Point curr_node_position, new_position;
 
 	if (node == NULL) {
@@ -54,14 +56,14 @@ void insert_helper(TreeNode* node, int value) {
 		if (node->left != NULL) {
 			insert_helper(node->left, value);
         } else {
-            new_position = (Point){ .x = curr_node_position.x - 150, .y = curr_node_position.y + 120 };
+            new_position = (Point){ .x = curr_node_position.x - X_CHANGE, .y = curr_node_position.y + Y_CHANGE };
 			node->left = create_binary_tree_node(value, new_position);
         }
 	} else {
 		if (node->right != NULL) {
 			insert_helper(node->right, value);
         } else {
-            new_position = (Point){ .x = curr_node_position.x + 150, .y = curr_node_position.y + 120 };
+            new_position = (Point){ .x = curr_node_position.x + X_CHANGE, .y = curr_node_position.y + Y_CHANGE };
 			node->right = create_binary_tree_node(value, new_position);
         }
 	}
@@ -104,7 +106,7 @@ void draw_parent_child_line(Point parent_position, Point node_position, int node
 void draw_binary_tree_node_value(TreeNode* node) {
     Vector2 textSize;
     const char* text = NULL;
-    int fontSize = 30, textY, textX;
+    int fontSize = 20, textY, textX;
     Font font = GetFontDefault();
 
     text = TextFormat("%d", node->value);
