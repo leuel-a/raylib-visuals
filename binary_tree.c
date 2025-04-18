@@ -1,10 +1,12 @@
 #include "raylib.h"
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "main.h"
 #include "binary_tree.h"
 
+// BINARY TREE FUNCTIONS
 BinaryTree* create_binary_tree(Point root_position) {
 	BinaryTree* tree =  malloc(sizeof(BinaryTree));
 
@@ -65,7 +67,7 @@ void insert_helper(TreeNode* node, int value) {
 	}
 }
 
-/** visualization functions for a binary tree */
+// VISUALIZATION FUNCTIONS
 void draw_binary_tree(BinaryTree* tree, int node_radius) {
 	if (tree == NULL)
 		return;
@@ -73,14 +75,37 @@ void draw_binary_tree(BinaryTree* tree, int node_radius) {
 }
 
 void draw_binary_tree_helper(TreeNode* node, int node_radius, Point *parent_position) {
-    Vector2 textSize;
-    const char* text = NULL;
-    Font font = GetFontDefault();
-    int fontSize = 30, textY, textX;
-
     if (node == NULL) return;
 
-    DrawCircle(node->position.x, node->position.y, node_radius, BLUE);
+    DrawCircleLines(node->position.x, node->position.y, node_radius, WHITE);
+
+    draw_binary_tree_node_value(node);
+
+    if (parent_position != NULL) {
+        draw_parent_child_line(*parent_position, node->position, node_radius);
+    }
+
+    draw_binary_tree_helper(node->left, node_radius, &node->position);
+    draw_binary_tree_helper(node->right, node_radius, &node->position);
+}
+
+void draw_parent_child_line(Point parent_position, Point node_position, int node_radius) {
+    float dx = node_position.x - parent_position.x;
+    float dy = node_position.y - parent_position.y;
+    float d = sqrtf(dx * dx + dy * dy);
+    float ux = dx / d, uy = dy / d;
+
+    Point parent_slide = { .x = parent_position.x + ux * node_radius, .y = parent_position.y + uy * node_radius };
+    Point node_slide = { .x = node_position.x - ux * node_radius, .y = node_position.y - uy * node_radius };
+
+    DrawLine(parent_slide.x, parent_slide.y, node_slide.x, node_slide.y, WHITE);
+}
+
+void draw_binary_tree_node_value(TreeNode* node) {
+    Vector2 textSize;
+    const char* text = NULL;
+    int fontSize = 30, textY, textX;
+    Font font = GetFontDefault();
 
     text = TextFormat("%d", node->value);
     textSize = MeasureTextEx(font, text, fontSize, 1);
@@ -89,15 +114,9 @@ void draw_binary_tree_helper(TreeNode* node, int node_radius, Point *parent_posi
     textY = node->position.y - textSize.y / 2;
 
     DrawTextEx(font, text, (Vector2){textX, textY}, fontSize, 1, WHITE);
-    if (parent_position != NULL) {
-        DrawLine(parent_position->x, parent_position->y, node->position.x, node->position.y, WHITE);
-    }
-
-    draw_binary_tree_helper(node->left, node_radius, &node->position);
-    draw_binary_tree_helper(node->right, node_radius, &node->position);
 }
 
-/** search functions for a binary tree */
+// SEARCH FUNCTIONS
 void dfs(BinaryTree* tree) {
 	if (tree == NULL)
 		return;
@@ -110,7 +129,9 @@ void dfs_helper(TreeNode* node) {
 		return;
 
 	dfs_helper(node->left);
+
 	printf("%d (%d, %d)", node->value, node->position.x, node->position.y);
 	dfs_helper(node->right);
+
 }
 

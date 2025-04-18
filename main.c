@@ -5,8 +5,8 @@
 
 int main(void)
 {
-    const int SCREEN_WIDTH = 800;
-    const int SCREEN_HEIGHT = 600;
+    const int SCREEN_WIDTH = 1200;
+    const int SCREEN_HEIGHT = 800;
     const int NODE_RADIUS = 40;
 
     Point root_position = { .x = SCREEN_WIDTH / 2, .y = 100 };
@@ -27,6 +27,7 @@ int main(void)
     {
         BeginDrawing();
             ClearBackground(BLACK);
+
             draw_binary_tree(tree, NODE_RADIUS);
         EndDrawing();
     }
