@@ -1,2 +1,3 @@
-# ignore the executable file
+build/
+
 main
