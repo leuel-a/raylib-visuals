@@ -17,9 +17,9 @@ LIBS=\
       -ldl\
       -lrt\
       -lX11
-OUTPUT= main 
-INPUT= binary_tree.c main.c
-HEADER_FILES = binary_tree.h main.h
+OUTPUT= main
+INPUT= binary_tree.c main.c draw_binary_tree.c
+HEADER_FILES = binary_tree.h main.h draw_binary_tree.h
 
 .PHONY: all
 all: $(OUTPUT)

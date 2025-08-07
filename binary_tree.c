@@ -50,6 +50,28 @@ void insert(TreeNode *node, int value) {
 }
 
 /**
+ * assign_positions - Assigns x positions for the binary tree nodes
+ *
+ * @node: pointer to the tree node to assign position to
+ * @current_x: the current x position to use for the binary tree
+ *
+ * Returns: Nothing
+ */
+void assign_positions(TreeNode *node, int *current_x, int *root_position, int is_root) {
+    if (node == NULL)
+        return;
+
+    assign_positions(node->left, current_x, root_position, 0);
+
+    node->x_position = (*current_x)++;
+    if (is_root == 1) {
+        *root_position = *current_x;
+    }
+
+    assign_positions(node->right, current_x, root_position, 0);
+}
+
+/**
  * dfs - Performs a depth-first search on a binary tree.
  * @tree: Pointer to the BinaryTree structure.
  *

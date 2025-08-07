@@ -20,5 +20,6 @@ void dfs(TreeNode *);
 BinaryTree *create_binary_tree();
 void insert(TreeNode *node, int value);
 TreeNode *create_binary_tree_node(int value);
+void assign_positions(TreeNode *node, int *current_x, int *root_position, int is_root);
 
 #endif /*BINARY_TREE_H*/
