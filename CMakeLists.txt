@@ -5,3 +5,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include_directories("/opt/raylib/include")
 
+add_library(main MODULE main.c)
+
+
