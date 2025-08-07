@@ -5,6 +5,7 @@
 
 typedef struct TreeNode {
     int value;
+    int x_position;
     struct TreeNode *left;
     struct TreeNode *right;
 } TreeNode;
@@ -14,12 +15,10 @@ typedef struct BinaryTree {
     Point root_position;
 } BinaryTree;
 
-void dfs(BinaryTree *tree);
-void dfs_helper(TreeNode *node);
+void dfs(TreeNode *);
 
 BinaryTree *create_binary_tree();
+void insert(TreeNode *node, int value);
 TreeNode *create_binary_tree_node(int value);
-void insert(BinaryTree *tree, int value);
-void insert_helper(TreeNode *tree, int value);
 
 #endif /*BINARY_TREE_H*/
