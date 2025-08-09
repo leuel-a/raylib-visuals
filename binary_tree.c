@@ -27,23 +27,40 @@ TreeNode *create_binary_tree_node(int value) {
 }
 
 /**
+ * insert - inserts a value to the binary tree (will create a BST)
+ *
+ * @tree: the tree to add the node value to
+ * @value: the value that will be added to the tree
+ *
+ * Returns: Nothing
+ */
+void insert(BinaryTree *tree, int value) {
+    if (tree->root == NULL) {
+        tree->root = create_binary_tree_node(value);
+        return;
+    }
+    insert_helper(tree->root, value);
+}
+
+/**
  * insert_helper - Recursively finds the correct position and inserts a new value.
  * @node: current node in the binary tree.
  * @value: value to insert.
  */
-void insert(TreeNode *node, int value) {
+void insert_helper(TreeNode *node, int value) {
     if (node == NULL)
         return;
+
     if (node->value > value) {
         if (node->left != NULL) {
-            insert(node->left, value);
+            insert_helper(node->left, value);
             return;
         }
         node->left = create_binary_tree_node(value);
         return;
     }
     if (node->right != NULL) {
-        insert(node->right, value);
+        insert_helper(node->right, value);
         return;
     }
     node->right = create_binary_tree_node(value);

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 const int NODE_RADIUS = 30;
-const int X_CHANGE = 150;
+const int X_CHANGE = 120;
 const int Y_CHANGE = 80;
 
 /**
@@ -16,7 +16,6 @@ const int Y_CHANGE = 80;
  * Returns: Nothing
  */
 void draw_binary_tree(BinaryTree *tree, int root_x_position, Point node_point) {
-    printf("%d Root Position Value -> ", root_x_position);
     draw_binary_tree_helper(tree->root, node_point, root_x_position);
 }
 
@@ -28,21 +27,22 @@ void draw_binary_tree(BinaryTree *tree, int root_x_position, Point node_point) {
  *
  * Returns: Nothing
  */
-void draw_binary_tree_helper(TreeNode *node, Point position, int root_x_position) {
+void draw_binary_tree_helper(TreeNode *node, Point position, int prev_node_x_position) {
     if (node == NULL)
         return;
 
-    Point curr_node_position;
-    int x_change = node->x_position - root_x_position;
+    int x_change = node->x_position - prev_node_x_position;
+    Point curr_node_position = {.x = abs(position.x + (x_change * X_CHANGE)), .y = position.y};
 
-    if (x_change == root_x_position) {
+    if (x_change == prev_node_x_position) {
         draw_binary_tree_node(node->value, position);
     } else {
-        curr_node_position.x = abs(position.x + (x_change * X_CHANGE));
-        curr_node_position.y = abs(position.y + (Y_CHANGE));
-
         draw_binary_tree_node(node->value, curr_node_position);
     }
+
+    Point new_position = {.x = curr_node_position.x, .y = position.y + Y_CHANGE};
+    draw_binary_tree_helper(node->left, new_position, node->x_position);
+    draw_binary_tree_helper(node->right, new_position, node->x_position);
 }
 
 /**
@@ -54,5 +54,6 @@ void draw_binary_tree_helper(TreeNode *node, Point position, int root_x_position
  */
 void draw_binary_tree_node(int value, Point position) {
     (void)value;
+    // DrawText(value, position.x, position.y, 12, WHITE);
     DrawCircleLines(position.x, position.y, NODE_RADIUS, WHITE);
 }
